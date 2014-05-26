@@ -136,11 +136,16 @@ function createEvent($eventData)
 
 function signIn($eventID, $userID)
 {
+    $usercheck = getUser($userID);
+    if (!$usercheck)
+    {
+        return "ERROR: userID " . $userID . " not found.";
+    }
+
     $event = getEvent($eventID);
     if (!$event)
     {
-        echo "couldn't retrieve event";
-        return false;
+        return "ERROR: couldn't retrieve event";
     }
 
     $users = $event['users'];
@@ -150,10 +155,28 @@ function signIn($eventID, $userID)
     }
     else
     {
-        $users[] = $userID;
+        $found = false;
+        foreach ($users as $user)
+        {
+            if ($user == $userID)
+            {
+                $found = true;
+            }
+        }
+        if (!$found)
+        {
+            $users[] = $userID;
+        }
+        else
+        {
+            return "ERROR: User already signed in.";
+        }
     }
 
-    return updateEvent($eventID, array('users' => $users));
+    if (updateEvent($eventID, array('users' => $users)))
+    {
+        return "SIGN-IN: SUCCESS";
+    }
 }
 
 if (!$included)

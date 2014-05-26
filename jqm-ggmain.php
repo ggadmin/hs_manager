@@ -7,8 +7,6 @@
  */
 
 session_start();
-$adminMode = false;
-$msg = NULL;
 
 $included = true;
 require_once("jqm-head.php");
@@ -16,10 +14,6 @@ require_once("users.php");
 require_once("events.php");
 require_once("options.php");
 
-if (isset($_SESSION['adminmode']))
-{
-    $adminMode = $_SESSION['adminmode'];
-}
 
 function generateTodaysEventList()
 {
@@ -42,37 +36,65 @@ function generateTodaysEventList()
                 }
             }
         }
-        $html .= '<li><a data-rel="dialog" data-transition="pop" href="jqm-ggsignin.php?eid=' . $event['eid'] . '">Sign-In</a></li>
+        $html .= '<li><a data-transition="slide" href="jqm-ggsignin.php?eid=' . $event['eid'] . '">Sign-In</a></li>
             </ul>
             </div>';
     }
-    $html .= '</ul>';
+    //$html .= '</ul>';
     echo $html;
 }
 
-function generateMainPage($msg)
+function generateAdminList()
 {
+    $html = '<li data-role="list-divider">' . "Admin Controls" . '</li>
+            <li><a data-transition="slideright" href="jqm-dbeditor.php">Edit Database</a></li>';
+    echo $html;
+}
+
+function generateMainPage()
+{
+
+    $adminMode = false;
+
+    if (isset($_SESSION['adminmode']))
+    {
+        $adminMode = $_SESSION['adminmode'];
+    }
+
     $html =
         '<div data-role="page" id="mainPage" data-theme="b" data-title="Geekspace Gwinnett Main">
         <div data-role="header">
-        <h1>Geekspace Gwinnett Main</h1>';
+        <h1>Geekspace Gwinnett Main</h1>
+        </div>';
         if ($msg)
         {
             $html .= '<button disabled="">' . $msg . '</button>';
         }
     $html .=
-        '</div>
-        <ul data-role="listview" data-inset="true">
+        '<ul data-role="listview" data-inset="true">
             <li data-role="list-divider">' . "Today's Events" . '</li>';
     echo $html;
     generateTodaysEventList();
+    if ($adminMode)
+    {
+        generateAdminList();
+    }
+
     $html =
         '</ul>
         <div data-role="footer" class="ui-bar">
         <a data-role="button" href="jqm-ggnewuser.php" data-transition="slideup" >New User</a>
-        <a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>
-        <a data-role="button" data-rel="dialog" href="jqm-ggadmin.php" data-transition="pop" >Enable Admin Mode</a>
-        </div>';
+        <a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>';
+    if ($adminMode)
+    {
+        $html .= '<a data-role="button" data-rel="dialog" href="jqm-ggadmin.php" data-transition="pop" >Disable Admin Mode</a>';
+    }
+    else
+    {
+        $html .= '<a data-role="button" data-rel="dialog" href="jqm-ggadmin.php" data-transition="pop" >Enable Admin Mode</a>';
+    }
+
+    $html .= '</div>';
     echo $html;
 
     echo '</div>'; // end of main page
@@ -81,6 +103,6 @@ function generateMainPage($msg)
 echo '<html>';
 generateJQMHeader();
 echo '<body>';
-generateMainPage($msg);
+generateMainPage();
 echo '</body>';
 echo '</html>';
