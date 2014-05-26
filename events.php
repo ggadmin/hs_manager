@@ -73,6 +73,11 @@ function updateEvent($eventID, $atts)
     return true;
 }
 
+function formatDate($date)
+{
+    return date("Ymd", strtotime($date));
+}
+
 function validateEvent($eventData)
 {
     // check for required fields
@@ -90,8 +95,10 @@ function createEvent($eventData)
 {
     if (!validateEvent($eventData))
     {
-        return false;
+        return "Error: eventData is invalid!";
     }
+
+    $eventData['date'] = (int)formatDate($eventData['date']);
 
     $events = findEvents(array('date' => $eventData['date']));
 
@@ -104,7 +111,13 @@ function createEvent($eventData)
             $lastEvent = $event['eid'];
         }
     }
+    if ($lastEvent == 0)
+    {
+        $today = (int)date("Ymd");
+        $lastEvent = $today * 100; // add 2 0's to end of date to make event id format
+    }
 
+    // increment event number in id
     $eventData['eid'] = $lastEvent + 1;
 
     $m = new MongoClient();
@@ -113,11 +126,11 @@ function createEvent($eventData)
 
     if($collection->insert($eventData))
     {
-        return true;
+        return "Added Event: " . $eventData['eName'];
     }
     else
     {
-        return false;
+        return "Add Event Failed!";
     }
 }
 
@@ -145,85 +158,6 @@ function signIn($eventID, $userID)
 
 if (!$included)
 {
-    if ( count($_GET) > 0 )
-    {
-        $sCriteria = array();
-        foreach ($_GET as $key => $value)
-        {
-            switch ($key)
-            {
-                case 'eid':
-                    $event = getEvent($value);
-                    echo json_encode($event);
-                    break;
-                default:
-                    $sCriteria[$key] = $value;
-                    break;
-            }
-        }
-
-        if ( count($sCriteria) > 0 )
-        {
-            $events = findEvents($sCriteria);
-            echo json_encode($events);
-        }
-    }
-    elseif ( count($_POST) > 0 )
-    {
-        //echo "post request was detected";
-        $eventData = array();
-        $eventID = NULL;
-        foreach ($_POST as $key => $value)
-        {
-            switch ($key)
-            {
-                case 'eid':
-                    $eventID = $value;
-                    break;
-                case 'date':
-                    echo $value;
-                    break;
-                default:
-                    $eventData[$key] = $value;
-                    break;
-            }
-        }
-
-        //var_dump($eventData);
-
-        if ( count($eventData) > 0 )
-        {
-            if ($eventID)
-            {
-                if (updateEvent($eventID, $eventData))
-                {
-                    $message = "update of event-->" . $eventID . " SUCCESS";
-                    echo json_encode(array('message' => $message));
-                }
-                else
-                {
-                    $message = "update of event-->" . $eventID . " FAILED";
-                    echo json_encode(array('message' => $message));
-                }
-            }
-            else
-            {
-                if (createEvent($eventData))
-                {
-                    $message = "creation of new event SUCCESS";
-                    echo json_encode(array('message' => $message));
-                }
-                else
-                {
-                    $message = "creation of new event FAILED";
-                    echo json_encode(array('message' => $message));
-                }
-            }
-        }
-    }
-    else
-    {
         $events = findEvents();
         echo json_encode($events);
-    }
 }
