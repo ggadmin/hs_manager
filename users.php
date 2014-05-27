@@ -82,7 +82,7 @@ function createUser($userData)
 {
     if (!validateUser($userData))
     {
-        return false;
+        return "ERROR: User data invalid.";
     }
 
     $users = findUsers();
@@ -105,11 +105,11 @@ function createUser($userData)
 
     if($collection->insert($userData))
     {
-        return true;
+        return "User Added";
     }
     else
     {
-        return false;
+        return "ERROR: Failed to add user.";
     }
 }
 

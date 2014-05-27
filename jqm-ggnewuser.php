@@ -19,6 +19,7 @@ function generateNewUserPage()
         . '</div>'
         . '<div data-role="content">'
         . '<form id="newUser" class="ui-body ui-body-b ui-corner-all" action="jqm-ggmenucontrol.php" data-ajax="false" method="POST">'
+        . '<input data-role="none" type="hidden" name="cmd" id="cmd" value="newuser">'
         . '<div data-role="fieldcontain">'
         . '<label for="fName">First</label>'
         . '<input type="text" id="fName" name="fName">'
