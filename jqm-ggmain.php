@@ -9,6 +9,7 @@
 session_start();
 
 $included = true;
+require_once("function-loader.php");
 require_once("jqm-head.php");
 require_once("users.php");
 require_once("events.php");
