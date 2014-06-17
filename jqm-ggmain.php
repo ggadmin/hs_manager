@@ -6,7 +6,7 @@
  * Time: 10:19 PM
  */
 
-session_start();
+
 
 $included = true;
 require_once("function-loader.php");
