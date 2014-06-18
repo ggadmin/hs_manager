@@ -7,6 +7,7 @@
  *
  * variables for big functions
  */
+session_start();
 set_include_path(getcwd());
 set_include_path(getcwd()."/lib");
 date_default_timezone_set('America/New_York');
@@ -15,7 +16,7 @@ $localdb['dbuser'] 	=	"root";
 $localdb['dbpass']	=	"";
 $localdb['dbhost']	=	"localhost";
 $localdb['gman'] 	=	"geekspace";
-$localdb['seltzer'] 	=	"seltzer";
+#$localdb['seltzer'] 	=	"seltzer";
 
 
 

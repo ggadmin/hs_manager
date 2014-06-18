@@ -6,47 +6,67 @@
  * Time: 9:21 PM
  */
 
-function findEvents($sCriteria = NULL)
+ //
+ 
+ 
+ 
+ // Functions should be in the library and not on the action pages
+$page_libs = "form";
+require_once("./function-loader.php");
+function listEvents($criteria = "future" )
 {
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'events');
-
-    $events = NULL;
-
-    if ($sCriteria)
+    global $databases;
+    $current_date = date("Y-m-d");
+    switch($criteria)
     {
-        $cursor = $collection->find($sCriteria);
-        $events = iterator_to_array($cursor);
+        
+        case "future":
+            $action = ">";
+            break;
+        
+        case "past":
+            $action = "<";
+            break;
+        
+        case "today":
+            $action = "WHERE evstartdate >= '".$current_date." 00:00:00' and evstartdate <= '".$current_date." 23:59:59' ";
+            break;
+        
+        case "all":
+            $action= "";
+        
     }
-    else
-    {
-        $cursor = $collection->find();
-        $events = iterator_to_array($cursor);
-    }
-
-    return $events;
-}
-
-function todaysEvents()
-{
     
-    $today = (int)date("Ymd");
-    //echo "today-->" . $today;
-    return findEvents(array('date' => $today));
+    
+    $get_events = database_query($databases['gman'], "select * from events ".$action." ");
+    if ($get_events['count'] == 0)
+    {
+        $get_events['error'] = "no events today";
+    }
+
+    return $get_events;
 }
 
-function getEvent($eventID)
+//Event info
+function eventinfo($evid)
 {
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'events');
-
-    echo "eid-->" . $eventID;
-    $event = $collection->findOne(array('eid' => (int)$eventID));
-    var_dump($event);
-
-    return $event;
+    global $databases;
+    
+    // trust no input;
+    $evid = intval($evid);
+    
+    $get_events = database_query($databases['gman'], "select * from events where evid = ".$evid);
+    if ($get_events['count'] == 0)
+    {
+        return false;
+    }
+    $event_info = $get_events['result'];
+    
+    // We need user registration data
+    $get_users =  database_query($databases['gman'], "select * from event_registration where evid = ".$evid." and dtunreg is NULL");
+    $event_info['users'] = $get_users['result'];
+    
+    return $event_info;
 }
 
 function updateEvent($eventID, $atts)
@@ -81,9 +101,9 @@ function formatDate($date)
 function validateEvent($eventData)
 {
     // check for required fields
-    if ( array_key_exists( 'date', $eventData ) )
+    if ( array_key_exists( 'evstartdate', $eventData ) )
     {
-        if ( array_key_exists( 'descrip', $eventData ) )
+        if ( array_key_exists( 'eventname', $eventData ) )
         {
             return true;
         }
@@ -93,89 +113,64 @@ function validateEvent($eventData)
 
 function createEvent($eventData)
 {
+    global $databases;
+    if (isset($_SESSION['adminmode']))
+    {
     if (!validateEvent($eventData))
     {
         return "Error: eventData is invalid!";
     }
-
-    $eventData['date'] = (int)formatDate($eventData['date']);
-
-    $events = findEvents(array('date' => $eventData['date']));
-
-    $lastEvent = 0;
-
-    foreach ($events as $event )
+    
+    
+    //FIXME: Locations. for now, "GG"
+    $eventData['evlocation'] = "GG";
+  
+    if( database_insert($databases['gman'], "events", $eventData))
     {
-        if ( $event['eid'] > $lastEvent )
-        {
-            $lastEvent = $event['eid'];
-        }
-    }
-    if ($lastEvent == 0)
-    {
-        $today = (int)date("Ymd");
-        $lastEvent = $today * 100; // add 2 0's to end of date to make event id format
-    }
-
-    // increment event number in id
-    $eventData['eid'] = $lastEvent + 1;
-
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'events');
-
-    if($collection->insert($eventData))
-    {
-        return "Added Event: " . $eventData['eName'];
+        return "Added Event: " . $eventData['eventname'];
     }
     else
     {
         return "Add Event Failed!";
     }
+    }
 }
 
 function signIn($eventID, $userID)
 {
+    
+    global $databases;
     $usercheck = getUser($userID);
     if (!$usercheck)
     {
         return "ERROR: userID " . $userID . " not found.";
     }
 
-    $event = getEvent($eventID);
+    $event = eventinfo($eventID);
     if (!$event)
     {
-        return "ERROR: couldn't retrieve event";
+        return "ERROR: couldn't retrieve event with ID ".$eventID;
     }
 
-    $users = $event['users'];
-    if (!$users)
+    $users = $eventinfo['users'];
+    if (!in_array($userID, $users))
     {
-        $users = array($userID);
-    }
-    else
-    {
-        $found = false;
-        foreach ($users as $user)
+        $evid = intval($eventID);
+        $uid = intval($userID);
+        
+        if(database_update($databases['gman'], "insert into event_registration set evid = ".$evid.", uid = ".$uid.", dtattend = CURRENT_TIMESTAMP"))
         {
-            if ($user == $userID)
-            {
-                $found = true;
-            }
-        }
-        if (!$found)
-        {
-            $users[] = $userID;
+            return TRUE;
         }
         else
         {
-            return "ERROR: User already signed in.";
+            return "error with signin";
         }
     }
-
-    if (updateEvent($eventID, array('users' => $users)))
+    else
     {
-        return "SIGN-IN: SUCCESS";
+        // user is already signed in.
+        return TRUE;
     }
 }
 

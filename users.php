@@ -5,35 +5,29 @@
  * Date: 5/10/14
  * Time: 1:05 PM
  */
-
-function findUsers($sCriteria = NULL)
+require_once("./function-loader.php");
+function listUsers($sCriteria = NULL)
 {
-    $m = new MongoClient();
+   global $databases;
+       
+    $get_users = database_query($databases['gman'], "select uid,fname,lname,email1 from members order by lname desc");
 
-    $collection = $m->selectCollection('gg_admin', 'users');
-
-    $users = NULL;
-
-    if ($sCriteria)
-    {
-        $cursor = $collection->find($sCriteria);
-        $users = iterator_to_array($cursor);
-    }
-    else
-    {
-        $cursor = $collection->find();
-        $users = iterator_to_array($cursor);
-    }
-
-    return $users;
+    return $get_users;
 }
 
 function getUser($userID)
 {
     global $databases;
-    $member_q = database_query($databases['geekspace'], "select * from members where uid=".$userID);
-    $user = $member_q['result'][0];
-    return $user;
+    $uid = intval($userID);
+    if ($member_q = database_query($databases['gman'], "select * from members where uid=".$uid))
+    {
+        $user = $member_q['result'][0];
+        return $user;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 function updateUser($userID, $atts)

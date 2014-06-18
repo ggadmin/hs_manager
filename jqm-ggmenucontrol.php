@@ -6,7 +6,7 @@
  * Time: 11:03 AM
  */
 //var_dump($_POST);
-session_start();
+
 $adminMode = false;
 
 $included = true;
@@ -26,17 +26,27 @@ if (isset($_POST['cmd']))
     switch ($_POST['cmd'])
     {
         case "signin":
-            $eid = (int)$_POST['eid'];
+            $evid = (int)$_POST['evid'];
             $uid = (int)$_POST['uid'];
-            $_SESSION['msg'] = signIn($eid, $uid);
+            $_SESSION['msg'] = signIn($evid, $uid);
             header('Location: jqm-message.php');
             break;
         case "newevent":
             $eventData = array();
-            $eventData['eName'] = $_POST['eName'];
-            $eventData['category'] = $_POST['category'];
-            $eventData['descrip'] = $_POST['descrip'];
-            $eventData['date'] = $_POST['date'];
+            $eventData['eventname'] = $_POST['eName'];
+            $eventData['eventdesc'] = $_POST['descrip'];
+            $eventData['evstartdate'] = date("Y-m-d H:i:s", strtotime($_POST['startdate']. " ".$_POST['starttime'])) ;
+            $eventData['evenddate'] = date("Y-m-d H:i:s", strtotime($_POST['enddate']. " ".$_POST['endtime'])) ;
+            $eventData['catid'] = $_POST['category'];
+            if ($_SESSION['rid'] >= 3 )
+            {
+                $eventData['evhostid'] = intval($_POST['evhostid']);
+            }
+            else
+            {
+                $eventData['evhostid'] = intval($_SESSION['uid']);
+            }
+
             $_SESSION['msg'] = createEvent($eventData);
             header('Location: jqm-message.php');
             break;

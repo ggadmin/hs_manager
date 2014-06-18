@@ -82,18 +82,22 @@ function timedrop($name,$value="00:00"){
 #category dropdown
 # semi-arbitrary version of the member dropdown
 # Needs associative array with database value -> display pairs
-function makeDrop($field_name, $display_name = "Category", $data_array, $selected="S")
+function catDrop($selected="S")
 {
+    global $databases;
+    $selected = intval($selected);
+    $cat_query = database_query($databases['gman'], "select * from event_categories order by catname desc");
+    $cats = $cat_query['result'];
      
-     $drop="<select name=\"".$field_name."\"><option value=\"S\" selected>-- Select ".$display_name." --</option>";
+     $drop="<select name=\"category\"><option value=\"S\" selected>-- Select ".$display_name." --</option>";
 
     
-    foreach ($data_array as $key => $row){
+    foreach ($cats as $key => $row){
 		    $sel="";
-		    if ($key == $selected ){
+		    if ($row['catid'] == $selected ){
 			    $sel="selected";
 		    }
-		    $drop .= '<option  value="'.$key.'">'.$row.'</option>';
+		    $drop .= '<option  value="'.$row['catid'].'">'.$row['catname'].'</option>';
 	    }
     $drop .= '</select>';
     return $drop;

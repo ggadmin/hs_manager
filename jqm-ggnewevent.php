@@ -7,6 +7,9 @@
  */
 
 $included = true;
+
+require_once("function-loader.php");
+require_once("lib/form-functions.php");
 require_once("jqm-head.php");
 require_once("users.php");
 require_once("events.php");
@@ -14,8 +17,23 @@ require_once("options.php");
 
 function generateNewEventPage()
 {
-    $html =
-        '<div data-role="page" id="newEventPage" data-theme="b" data-title="New Event">
+    $cat = catDrop();
+    
+    if ($_SESSION['rid'] >= 3)
+    {
+        $hostform ='<div data-role="fieldcontain">
+                    <label for="descrip">Host</label>';
+                    $hostform .= memberdrop("evhostid");
+                    $hostform .= '</div>';
+        
+
+    }
+    else{
+        $hostform = "";
+    }
+    
+    $html = <<<EOF
+        <div data-role="page" id="newEventPage" data-theme="b" data-title="New Event">
             <div data-role="header" data-theme="b">
                 <h1>New Event</h1>
             </div>
@@ -26,25 +44,30 @@ function generateNewEventPage()
                     <label for="eName">Event Name</label>
                     <input type="text" id="eName" name="eName">
                 </div>
-                <div data-role="fieldcontain">
-                    <label for="category">Category</label>';
-    $html .=
-                    '<select id="category" name="category">';
-    $options = getOptions("eCategory");
-    foreach ($options['options'] as $option)
-    {
-        $html .= '<option value="' . $option . '">' . $option . '</option>';
-    }
-    $html .=
-                    '</select>
+                    <div data-role="fieldcontain">
+                    <label for="descrip">Category</label>
+                    $cat
                 </div>
+                $hostform
                 <div data-role="fieldcontain">
                     <label for="descrip">Description</label>
                     <input type="text" id="descrip" name="descrip">
                 </div>
                 <div data-role="fieldcontain">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" value="">
+                    <label for="date">Start Date</label>
+                    <input type="date" id="startdate" name="startdate" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="time">Start Time</label>
+                    <input type="time" id="starttime" name="starttime" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="date">End Date</label>
+                    <input type="date" id="enddate" name="enddate" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="date">End Time</label>
+                    <input type="time" id="endtime" name="endtime" value="">
                 </div>
                 <button type="submit" data-theme="b" name="submit" value="submit-value">Submit</button>
             </form>
@@ -52,7 +75,8 @@ function generateNewEventPage()
         <div data-role="footer">
             <h1>New Event</h1>
         </div>
-    </div>';
+    </div>
+EOF;
     echo $html;
 }
 
