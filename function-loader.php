@@ -9,7 +9,6 @@
  */
 
 //Start session stuff:
-session_start();
 header("Cache-control: private");
  
  // Load basic confiiguration

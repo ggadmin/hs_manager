@@ -30,12 +30,9 @@ function findUsers($sCriteria = NULL)
 
 function getUser($userID)
 {
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'users');
-
-    $user = $collection->findOne(array('uid' => $userID));
-
+    global $databases;
+    $member_q = database_query($databases['geekspace'], "select * from members where uid=".$userID);
+    $user = $member_q['result'][0];
     return $user;
 }
 

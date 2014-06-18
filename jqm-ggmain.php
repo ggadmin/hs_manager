@@ -102,8 +102,27 @@ function generateMainPage()
 }
 
 echo '<html>';
-generateJQMHeader();
+#generateJQMHeader();
 echo '<body>';
-generateMainPage();
+echo "<pre>";
+$m = new MongoClient();
+
+    $collection = $m->selectCollection('gg_admin', 'users');
+
+    $users = NULL;
+
+    if ($sCriteria)
+    {
+        $cursor = $collection->find($sCriteria);
+        $users = iterator_to_array($cursor);
+    }
+    else
+    {
+        $cursor = $collection->find();
+        $users = iterator_to_array($cursor);
+    }
+    print_r($users);
+
+#generateMainPage();
 echo '</body>';
 echo '</html>';

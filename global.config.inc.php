@@ -9,7 +9,7 @@
  */
 set_include_path(getcwd());
 set_include_path(getcwd()."/lib");
-
+date_default_timezone_set('America/New_York');
  // Local database cred
 $localdb['dbuser'] 	=	"root";
 $localdb['dbpass']	=	"";

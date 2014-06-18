@@ -30,7 +30,7 @@ function findEvents($sCriteria = NULL)
 
 function todaysEvents()
 {
-    date_default_timezone_set('America/New_York');
+    
     $today = (int)date("Ymd");
     //echo "today-->" . $today;
     return findEvents(array('date' => $today));
