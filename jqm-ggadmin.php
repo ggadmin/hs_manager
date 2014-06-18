@@ -52,7 +52,10 @@ LGN;
         {
              #generateJQMHeader();
             $_SESSION['adminmode']="admin on";
+<<<<<<< HEAD
             
+=======
+>>>>>>> origin/master
             header("Location: jqm-ggmain.php");
         }
         else {

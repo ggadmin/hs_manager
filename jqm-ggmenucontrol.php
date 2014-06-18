@@ -37,6 +37,7 @@ if (isset($_POST['cmd']))
             $eventData['eventdesc'] = $_POST['descrip'];
             $eventData['evstartdate'] = date("Y-m-d H:i:s", strtotime($_POST['startdate']. " ".$_POST['starttime'])) ;
             $eventData['evenddate'] = date("Y-m-d H:i:s", strtotime($_POST['enddate']. " ".$_POST['endtime'])) ;
+<<<<<<< HEAD
             $eventData['catid'] = $_POST['category'];
             if ($_SESSION['rid'] >= 3 )
             {
@@ -47,6 +48,8 @@ if (isset($_POST['cmd']))
                 $eventData['evhostid'] = intval($_SESSION['uid']);
             }
 
+=======
+>>>>>>> origin/master
             $_SESSION['msg'] = createEvent($eventData);
             header('Location: jqm-message.php');
             break;

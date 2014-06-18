@@ -90,7 +90,11 @@ function generateMainPage()
         <a data-role="button" href="jqm-ggnewuser.php" data-transition="slideup" >New User</a>';
     if ($adminMode)
     {
+<<<<<<< HEAD
         $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Logout</a>';
+=======
+        $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Disable Admin Mode</a>';
+>>>>>>> origin/master
     }
     else
     {

@@ -120,11 +120,22 @@ function createEvent($eventData)
     {
         return "Error: eventData is invalid!";
     }
+<<<<<<< HEAD
     
     
     //FIXME: Locations. for now, "GG"
     $eventData['evlocation'] = "GG";
   
+=======
+    // FIXME: variable event host. For now make it whoever creates the event
+    $eventData['evhostid'] = $_SESSION['uid'];
+    
+    //FIXME: Locations. for now, "GG"
+    $eventData['evlocation'] = "GG";
+    
+  
+
+>>>>>>> origin/master
     if( database_insert($databases['gman'], "events", $eventData))
     {
         return "Added Event: " . $eventData['eventname'];

@@ -44,11 +44,15 @@ function generateNewEventPage()
                     <label for="eName">Event Name</label>
                     <input type="text" id="eName" name="eName">
                 </div>
+<<<<<<< HEAD
                     <div data-role="fieldcontain">
                     <label for="descrip">Category</label>
                     $cat
                 </div>
                 $hostform
+=======
+
+>>>>>>> origin/master
                 <div data-role="fieldcontain">
                     <label for="descrip">Description</label>
                     <input type="text" id="descrip" name="descrip">
