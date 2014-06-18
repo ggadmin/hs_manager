@@ -94,7 +94,7 @@ function database_insert($database, $table, $fields)
 	while ($n <= $c)
 		{
 		$fieldname	=	$fn[$n];
-		$qtval		=	$fields[$fieldname];
+		$qtval		=	qt($database, $fields[$fieldname]);
 		$flist		.=	$fieldname . " = " . $qtval . ", ";
 		$n++;
 		}

@@ -7,6 +7,9 @@
  */
 
 $included = true;
+
+require_once("function-loader.php");
+require_once("lib/form-functions.php");
 require_once("jqm-head.php");
 require_once("users.php");
 require_once("events.php");
@@ -26,25 +29,26 @@ function generateNewEventPage()
                     <label for="eName">Event Name</label>
                     <input type="text" id="eName" name="eName">
                 </div>
-                <div data-role="fieldcontain">
-                    <label for="category">Category</label>';
-    $html .=
-                    '<select id="category" name="category">';
-    $options = getOptions("eCategory");
-    foreach ($options['options'] as $option)
-    {
-        $html .= '<option value="' . $option . '">' . $option . '</option>';
-    }
-    $html .=
-                    '</select>
-                </div>
+
                 <div data-role="fieldcontain">
                     <label for="descrip">Description</label>
                     <input type="text" id="descrip" name="descrip">
                 </div>
                 <div data-role="fieldcontain">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" value="">
+                    <label for="date">Start Date</label>
+                    <input type="date" id="startdate" name="startdate" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="time">Start Time</label>
+                    <input type="time" id="starttime" name="starttime" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="date">End Date</label>
+                    <input type="date" id="enddate" name="enddate" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="date">End Time</label>
+                    <input type="time" id="endtime" name="endtime" value="">
                 </div>
                 <button type="submit" data-theme="b" name="submit" value="submit-value">Submit</button>
             </form>

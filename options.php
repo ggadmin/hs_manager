@@ -13,11 +13,5 @@ function getOptions($name)
         return NULL;
     }
 
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'options');
-
-    $options = $collection->findone(array('oName' => $name));
-
-    return $options;
+   return true;
 }

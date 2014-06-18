@@ -12,9 +12,9 @@ require_once("users.php");
 
 function generateSigninPage()
 {
-    if (isset($_GET['eid']))
+    if (isset($_GET['evid']))
     {
-        $eid = (int)$_GET['eid'];
+        $evid = (int)$_GET['evid'];
     }
     else
     {
@@ -30,22 +30,22 @@ function generateSigninPage()
             <div data-role="content">
                 <form class="ui-body ui-body-b ui-corner-all" action="jqm-ggmenucontrol.php" data-ajax="false" method="post">
                     <input type="hidden" data-role="none" name="cmd" id="cmd" value="signin">
-                    <input type="hidden" data-role="none" name="eid" id="eid" value="' . $eid . '">
+                    <input type="hidden" data-role="none" name="evid" id="evid" value="' . $evid . '">
                     <ul data-role="listview" data-inset="true" data-filter-reveal="true" data-theme="b" data-filter="true" data-filter-placeholder="name">';
 
 
-    $users = findUsers();
+    $users = listUsers();
 
-    foreach ($users as $user)
+    foreach ($users['result'] as $user)
     {
         $html .= '<li>'
             . '<button type="submit" name="uid" id="uid" value="' . $user['uid'] . '">'
 
-            . $user['fName']
+            . $user['fname']
             . ' '
-            . $user['lName']
+            . $user['lname']
             . ' -- '
-            . $user['email']
+            . $user['email1']
             . '</button>'
             . '</li>';
 

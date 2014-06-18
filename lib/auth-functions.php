@@ -23,7 +23,7 @@ function user_auth($username="default", $pass="", $remember=1) {
 	$user = qt($databases['gman'], $username);
 	
 	
-	$res = database_query($databases['gman'],"select * from members where username = ".$user);
+	$res = database_query($databases['gman'],"select * from members where email1 = ".$user);
 	$row = $res['result'][0];
 	$dbname   = $row['username'];
         $dbpass   = $row['pass'];

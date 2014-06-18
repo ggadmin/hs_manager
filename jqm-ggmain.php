@@ -18,13 +18,16 @@ require_once("options.php");
 
 function generateTodaysEventList()
 {
-    $events = todaysEvents();
+    $events =  listEvents("today");
+    echo "<pre>";
+    print_r($events);
+    echo "</pre>";
     $html = "";
 
-    foreach ($events as $event)
+    foreach ($events['result'] as $event)
     {
         $html .= '<div data-role="collapsible" data-theme="b" data-content-theme="b">
-            <h3>' . $event['eName'] . '</h3>
+            <h3>' . $event['eventname'] . '</h3>
             <ul data-role="listview" data-filter="false">';
         if (is_array($event['users']))
         {
@@ -37,7 +40,7 @@ function generateTodaysEventList()
                 }
             }
         }
-        $html .= '<li><a data-transition="slide" href="jqm-ggsignin.php?eid=' . $event['eid'] . '">Sign-In</a></li>
+        $html .= '<li><a data-transition="slide" href="jqm-ggsignin.php?evid=' . $event['evid'] . '">Sign-In</a></li>
             </ul>
             </div>';
     }
@@ -88,11 +91,11 @@ function generateMainPage()
         <a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>';
     if ($adminMode)
     {
-        $html .= '<a data-role="button" data-rel="dialog" href="jqm-ggadmin.php" data-transition="pop" >Disable Admin Mode</a>';
+        $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Disable Admin Mode</a>';
     }
     else
     {
-        $html .= '<a data-role="button" data-rel="dialog" href="jqm-ggadmin.php" data-transition="pop" >Enable Admin Mode</a>';
+        $html .= '<a data-role="button" href="jqm-ggadmin.php" data-transition="slideup" >Member Login</a>';
     }
 
     $html .= '</div>';
@@ -102,27 +105,10 @@ function generateMainPage()
 }
 
 echo '<html>';
-#generateJQMHeader();
+generateJQMHeader();
 echo '<body>';
-echo "<pre>";
-$m = new MongoClient();
 
-    $collection = $m->selectCollection('gg_admin', 'users');
 
-    $users = NULL;
-
-    if ($sCriteria)
-    {
-        $cursor = $collection->find($sCriteria);
-        $users = iterator_to_array($cursor);
-    }
-    else
-    {
-        $cursor = $collection->find();
-        $users = iterator_to_array($cursor);
-    }
-    print_r($users);
-
-#generateMainPage();
+generateMainPage();
 echo '</body>';
 echo '</html>';

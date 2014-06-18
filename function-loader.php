@@ -12,8 +12,8 @@
 header("Cache-control: private");
  
  // Load basic confiiguration
-include ("global.config.inc.php");
- 
+require_once("global.config.inc.php");
+require_once("jqm-head.php");
 
 
 /* Function thing
