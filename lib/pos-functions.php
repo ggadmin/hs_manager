@@ -57,7 +57,7 @@ function voidticket($invid){
 function remgame($itemid,$invid){
 	global $databases;
 		if (!haspaid($invid)){
-	$del=updateq("delete from invitems where lineid=".qt($itemid)."");
+	$del= database_update($databases['gman'], "delete from invitems where lineid=".qt($databases['gman'], $itemid)."");
 		return TRUE;
 		}
 		else {
@@ -199,7 +199,7 @@ function userinfo($uid){
 		}
 		else {
 	$results=$q['result'][0];
-	$results['phone1']=showphone($results['phone1']);
+	$results['phone1'] = $results['phone1'];
 	$results['name']=$results['fname']." ".$results['lname'];
 	
 	return $results;
@@ -208,7 +208,8 @@ function userinfo($uid){
 //checks to see if an invoice has any payments applied
 function haspaid($invid){
 	global $databases;
-		$q=database_query($databases['gman'],"select * from invoices where invid=".qt($invid)." and haspaid=1");
+	$invid = intval($invid);
+		$q=database_query($databases['gman'],"select * from invoices where invid=".$invid." and haspaid=1");
 		if ($q['count']==0){
 			return FALSE;
 			}
@@ -273,6 +274,63 @@ function money($var,$sign="\$"){
 	
 function discdrop($lineid){}
 
+function planform($invid){
+	global $databases;
+	global $ticketinfo;
+	$invoice_info = get_invoice_info($invid);
+	$userinfo = userinfo($invoice_info['uid']);
+		$gform=<<<GFT
+		
+
+GFT;
+		$q=database_query($databases['gman'],"select *,((invitems.price)*qty) as total, invitems.price as extend from invitems where invid='".$invid."' order by invitems.tadd asc");
+			if($q['count']!=0){
+				
+				while ($info = current($q['result'])){
+					$rate=money($info['extend']);
+					$total=money($info['total']);
+					
+					$planid = intval($_POST['plans']);
+					$plans = database_query($databases['gman'], "select * from plans where planid = ".$info['planid']);
+					$plan_info = $plans['result'][0];
+					
+					$info['name'] = $plan_info['planname']." : ". $userinfo['fname']." ".$userinfo['lname']." - ".$info['effdate'];
+					
+					$gform .=<<<GFM
+					<tr>
+					
+					<td align="left">$info[name]</td>
+					
+					<td align="left">$rate</td>
+					<td align="left">$info[qty]</td>
+					<td align="left">$total</td>
+					
+					<td align="left">&nbsp;</td>
+					
+					</tr>
+GFM;
+					next($q['result']);
+					}
+				
+			}
+
+$gform .="</table>";
+if($q['count']!=0){
+// this adds the payment button
+	$gform .= <<<EOF
+	<form class="ui-body ui-body-b ui-corner-all" action="" data-ajax="false" method="post">
+        <input type="hidden" data-role="none" name="formname" id="formname" value="processpayment">
+	<input type="hidden" data-role="none" name="invid" id="invid" value="$invid">
+	<label for="memo">Memo</label>
+	<input type="text" data-role="none" name="paymemo" id="paymemo" value="">
+	<select name="paycode"><option selected value="Cash">Cash</option><option value="Credit Card">Credit Card</option><option value="House Charge">House Charge</option></select>
+	<button type="submit" name="Submit" id="Submit" value="Submit Payment">Submit Payment</button>
+	</form>
+EOF;
+}
+return $gform;
+}
+
 function gameform($invid){
 	global $databases;
 	global $ticketinfo;
@@ -291,7 +349,7 @@ function gameform($invid){
 		</tr>
 
 GFT;
-		$q=database_query($databases['gman'],"select *,((invitems.price)*qty) as total, items.price as retail, invitems.price as extend from invitems,items where invid='".$invid."' and srcitemid=itemid order by invitems.tadd asc");
+		$q=database_query($databases['gman'],"select *,((invitems.price)*qty) as total, invitems.price as extend from invitems where invid='".$invid."' order by invitems.tadd asc");
 			if($q['count']!=0){
 				
 				while ($info = current($q['result'])){
@@ -314,6 +372,9 @@ GFT;
 					
 						$info['desc']=$info['desc'].$giftsel;
 					}
+					
+					
+					
 					
 					
 					$gform .=<<<GFM
@@ -353,9 +414,11 @@ function get_invoice_info($invoice_id)
 	$lines = array();
 	$n = 1;
 	
-	while ($item = $items['result'])
+	foreach ($items['result'] as $item)
 	{
 		$lines[$n]['srcitemid'] = $item['srcitemid'];
+		$lines[$n]['planid'] = $item['planid'];
+		$lines[$n]['effdate'] = $item['effdate'];
 		$lines[$n]['price'] = $item['price'];
 		$lines[$n]['qty'] = $item['qty'];
 		$lines[$n]['linesub'] = $item['price'] * $item['qty'];
@@ -386,7 +449,8 @@ function pos_parse_post()
 			case "newinvoice":
 				$fields = array();
 				$fields['uid'] = intval($_POST['uid']);
-				$fields['tcreate'] = "NOW()";
+				$fields['tcreate'] = date("Y-m-d H:i:s");
+				$fields['sid'] = $_SESSION['uid'];
 				$new_invoice = database_insert($databases['gman'], "invoices", $fields);
 				$invoice_id = $new_invoice['id'];
 				
@@ -396,8 +460,62 @@ function pos_parse_post()
 			
 			case "membership":
 				
-				echo "processing membership";
-				print_r($_POST);
+				$fields = array();
+				$fields['invid'] = intval($_POST['invid']);
+				$fields['qty'] = intval($_POST['qty']);
+				
+				//Get the plan details
+				$planid = intval($_POST['plans']);
+				
+				$plans = database_query($databases['gman'], "select plancost from plans where planid = ".$planid);
+				$plan_info = $plans['result'][0];
+				
+				$fields['planid'] = $planid;
+				$fields['taxable'] = 0;
+				$fields['price'] = $plan_info['plancost'];
+				$fields['effdate'] = date("Y-m-d", strtotime($_POST['startdate'])." 00:00:00");
+				$new_line = database_insert($databases['gman'], "invitems", $fields);
+								
+				#exit();
+				header("Location: ".my_url()."?invid=".intval($_POST['invid']));
+				break;
+			
+			case "processpayment":
+				
+				
+				$invid = intval($_POST['invid']);
+				if (!haspaid($invid))
+				{
+					$invoice_info = get_invoice_info($invid);
+					
+					$memo = qt($databases['gman'], $_POST['paymemo']);
+					$paycode = qt($databases['gman'], $_POST['paycode']);
+					
+					$planid = $invoice_info['lines'][1]['planid'];
+					$qty = $invoice_info['lines'][1]['qty'];
+					$effdate = $invoice_info['lines'][1]['effdate'];
+					if ($_POST['paycode'] == "House Charge")
+					{
+						$tendered = "0.00";
+					}
+					else
+					{
+						$tendered = gettotal($invid);
+					}
+					
+					// Process a payment and create the subscription
+					if ($database_update = database_update($databases['gman'], "update invoices set haspaid = 1, paymemo = ".$memo.", paycode = ".$paycode.", tendered = ".$tendered." where invid = ".$invid))
+					{
+						//add the subscription
+						if (addmembership($invoice_info['uid'], $planid, $qty, $effdate, $invid))
+						{
+							$_SESSION['msg'] = "Subscription set. Expires ";
+							 header('Location: jqm-message.php');
+						}
+						
+					}
+					
+				}
 				break;
 		}
 		
@@ -437,9 +555,9 @@ function new_invoice_form()
 	$catarray[1] = "Membership";
 	$catarray[0] = "Store items";
 	
-	$output = "New Ticket For:<br>";
+	
 	$output .= '<form action="" method="POST"> <input type="hidden" name="formname"  value="newinvoice" >';
-	$output .= makeDrop("linetype","Ticket Type", $catarray,"S");
+	#$output .= makeDrop("linetype","Ticket Type", $catarray,"S");
 	$output .= memberdrop("uid");
 	$output .= "<input type=\"Submit\" name=\"Submit\" value=\"Submit\"></form>";
 	return $output;

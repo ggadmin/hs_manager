@@ -59,4 +59,12 @@ function my_url()
     return "http://".$_SERVER['HTTP_HOST'].$where_i_am."/".$where_array['basename'];
 }
 
+function print_array($array)
+{
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
+    exit();
+}
+
 ?>

@@ -31,9 +31,5 @@ function generateMessage()
     }
 }
 
-echo '<html>';
-generateJQMHeader();
-echo '<body>';
-generateMessage();
-echo '</body>';
-echo '</html>';
+$html = generateMessage();
+JQMRender($html);

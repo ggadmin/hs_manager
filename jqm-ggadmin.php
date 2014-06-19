@@ -9,7 +9,7 @@
  */
  //Set this first
  $page_libs = "auth";
-
+$page_title="Member Login";
  require_once("./function-loader.php");
 
  // If we are not logged in, force the user to go to the login page
@@ -22,25 +22,12 @@
     // Pretty this up
     #background="images/splash.png
     $login =	<<<LGN
-<table cellspacing="0" cellpadding="1" border="0" width="432" height="768" ">
-<tr>
-	<td colspan="2" width="100%" height="550">&nbsp;</td>
-</tr>
-<tr>
-<td width="50%">&nbsp;</td>
-<td width="50%">
-<center>
-<font color="#ffffff">
+
 <form name="f" method="POST" action="jqm-ggadmin.php">
 Username:<br><input type="text" name="user" size="15"><br>Password:<br><input type="password" size="15" name="pass"><br><input type="Submit" value="Submit" 
 name="Login">
 
 </form>
-</font>
-</center>
-</td>
-</tr>
-</table>
 LGN;
 
     if (isset($_POST['Login']))
@@ -50,18 +37,14 @@ LGN;
         
         if (user_auth($_POST['user'], $_POST['pass']))
         {
-             #generateJQMHeader();
+             
             $_SESSION['adminmode']="admin on";
-<<<<<<< HEAD
-            
-=======
->>>>>>> origin/master
+
             header("Location: jqm-ggmain.php");
         }
         else {
-             generateJQMHeader();
-             echo $login;
-            "<b>$_SESSION[loginform]</b>";
+             JQMrender($login); 
+            
         }
         
     }
@@ -69,8 +52,8 @@ LGN;
     {
         
         
-        generateJQMHeader();
-        echo $login;
+        JQMRender($login);
+        
 
         
     }

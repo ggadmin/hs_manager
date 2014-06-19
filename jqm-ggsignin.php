@@ -7,26 +7,35 @@
  */
 
 $included = true;
+
+
+require_once("function-loader.php");
+require_once("events.php");
+
+
+$eventinfo = eventinfo($_GET['evid']);
+
+
+$page_title= $eventinfo['eventname']. "<br>Sign-In";
+
+
 require_once("jqm-head.php");
 require_once("users.php");
 
-function generateSigninPage()
-{
+
+
     if (isset($_GET['evid']))
     {
         $evid = (int)$_GET['evid'];
     }
     else
     {
-        exit("Error: eid required for signin list!");
+        exit("Error: evid required for signin list!");
     }
 
 
     $html =
-        '<div data-role="page" data-theme="b" data-title="User Chooser">
-            <div data-role="header">
-                <h1>Select User</h1>
-            </div>
+        '
             <div data-role="content">
                 <form class="ui-body ui-body-b ui-corner-all" action="jqm-ggmenucontrol.php" data-ajax="false" method="post">
                     <input type="hidden" data-role="none" name="cmd" id="cmd" value="signin">
@@ -53,14 +62,9 @@ function generateSigninPage()
     $html .=
                     '</ul>
                 </form>
-            </div>
-        </div>';
-    echo $html;
-}
+            </div>';
+    
 
-echo '<html>';
-generateJQMHeader();
-echo '<body>';
-generateSigninPage();
-echo '</body>';
-echo '</html>';
+
+JQMrender($html);
+#echo $html;

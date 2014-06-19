@@ -96,7 +96,7 @@ function user_hash ($password, $salt)
 /**
  * @return a random password salt.
  */
-function user_salt () {
+function user_salt() {
     $chars = 'abcdefghijklmnopqrstuvwxyz01234567890!@#$%^&*()-_=+[]{}\\|`~;:"\',./<>?';
     $char_count = strlen($chars);
     $salt_length = 16;
@@ -111,7 +111,7 @@ function user_salt () {
 #isstaff
 function isstaff()
 {
-	if ($_SESSION['rid'] > 3 )
+	if ($_SESSION['rid'] >= 3 )
 	{
 		return TRUE;
 	}
@@ -122,18 +122,29 @@ function isstaff()
 }
 # Function mypage: see if the user logged in is viewing their own personal info. Also returns true for staff
 function mypage($uid){
-    if ($_SESSION['uid'] == $uid){
-	return TRUE;
-    }
-    else {
-	if (isstaff()){
-	    return TRUE;
+	// Confirm this is a valid uid
+	global $databases;
+	$uid = intval($uid);
+	$uid_check = database_query($databases['gman'], "select uid from members where uid =".$uid);
+	if ($uid_check['count'] == 0)
+	{
+		// Bad uid
+		return FALSE;
 	}
-	else {
-	    return FALSE;
-	}
-    }
-    
+	else{
+		
+		if ($_SESSION['uid'] == $uid){
+			return TRUE;
+		}
+		else {
+			if (isstaff()){
+				return TRUE;
+			}
+		else {
+			return FALSE;
+			}
+		}
+	}    
     
 }
 

@@ -20,8 +20,8 @@ $localdb['gman'] 	=	"geekspace";
 
 
 
-//Title:
-$title = "Geekspace Management & Automation Node";
+//Title stuff
+$space_name = "Geekspace Gwinnett";
 
 // Set source path
 

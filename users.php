@@ -5,6 +5,7 @@
  * Date: 5/10/14
  * Time: 1:05 PM
  */
+$page_libs = "auth";
 require_once("./function-loader.php");
 function listUsers($sCriteria = NULL)
 {
@@ -28,6 +29,21 @@ function getUser($userID)
     {
         return FALSE;
     }
+}
+
+// Even quicker username getter
+function getname($uid)
+{
+    if($array = getUser($uid))
+    {
+        $output = $array['fname']." ".$array['lname'];
+        return $output;
+    }
+    else
+    {
+        return "";
+    }
+    
 }
 
 function updateUser($userID, $atts)
@@ -69,39 +85,47 @@ function validateUser($user)
     return false;
 }
 
+
+
 function createUser($userData)
 {
+    global $databases;
     if (!validateUser($userData))
     {
         return "ERROR: User data invalid.";
     }
 
-    $users = findUsers();
-
-    $lastUser = 0;
-
-    foreach ($users as $user )
+    //Check for this email address and reject if there is a duplicate.
+    $email_check = database_query($databases['gman'], "select email1 from members where email1 = ".qt($databases['gman'],$userData['email']));
+    if ($email_check['count'] != 0)
     {
-        if ( $user['uid'] > $lastUser )
-        {
-            $lastUser = $user['uid'];
-        }
-    }
-
-    $userData['uid'] = $lastUser + 1;
-
-    $m = new MongoClient();
-
-    $collection = $m->selectCollection('gg_admin', 'users');
-
-    if($collection->insert($userData))
-    {
-        return "User Added";
+        return "ERROR: Email address already in use!";
     }
     else
     {
-        return "ERROR: Failed to add user.";
+        // OK, we're clear. Let's build the fields
+        $fields = array();
+        $fields['fname'] = $userData['fName'];
+        $fields['lname'] = $userData['lName'];
+        $fields['email1'] = $userData['email'];
+        $fields['phone1'] = $userData['phone1'];
+        $fields['econtactname'] = $userData['eContact'];
+        $fields['econtactphone'] = $userData['ePhone'];
+        $fields['salt'] = user_salt();
+        $fields['pass'] = user_hash($userData['password1'], $fields['salt']);
+        
+        //Run the insert
+        if ($insert = database_insert($databases['gman'], "members", $fields))
+        {
+            return "Created user";
+        }
+        else{
+            return "ERROR: Could not insert user into database.";
+        }
+        
     }
+    
+    
 }
 
 if (!$included)

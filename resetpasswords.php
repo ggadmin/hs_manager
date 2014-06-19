@@ -5,7 +5,7 @@ require_once("function-loader.php");
 # reset passwords
 $password = "testpass";
 
-$salt = user_salt;
+$salt = user_salt();
 
 $hash = user_hash($password, $salt);
 

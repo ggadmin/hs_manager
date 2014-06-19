@@ -103,4 +103,23 @@ function catDrop($selected="S")
     return $drop;
 }
 
+# semi-arbitrary version of the member dropdown
+# Needs associative array with database value -> display pairs
+function makeDrop($field_name, $display_name = "Category", $data_array, $selected="S")
+{
+     
+     $drop="<select name=\"".$field_name."\"><option value=\"S\" selected>-- Select ".$display_name." --</option>";
+
+    
+    foreach ($data_array as $key => $row){
+		    $sel="";
+		    if ($key == $selected ){
+			    $sel="selected";
+		    }
+		    $drop .= '<option  value="'.$key.'">'.$row.'</option>';
+	    }
+    $drop .= '</select>';
+    return $drop;
+}
+
 ?>

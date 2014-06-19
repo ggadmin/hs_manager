@@ -9,6 +9,7 @@
 
 
 $included = true;
+$page_title= "GMAN Operations Menu";
 require_once("function-loader.php");
 require_once("jqm-head.php");
 require_once("users.php");
@@ -19,40 +20,48 @@ require_once("options.php");
 function generateTodaysEventList()
 {
     $events =  listEvents("today");
-    echo "<pre>";
-    print_r($events);
-    echo "</pre>";
     $html = "";
-
-    foreach ($events['result'] as $event)
+   
+    
+    foreach ($events as $event)
     {
+        
+        $eventinfo = eventinfo($event['evid']);
+        #print_array($eventinfo,true);
+        
+        $host_array = getUser($eventinfo['evhostid']);
+        $host_name = $host_array['fname']." ".$host_array['lname'];
+        
         $html .= '<div data-role="collapsible" data-theme="b" data-content-theme="b">
-            <h3>' . $event['eventname'] . '</h3>
+            <h3>' . $eventinfo['eventname'] . '</h3>
             <ul data-role="listview" data-filter="false">';
-        if (is_array($event['users']))
-        {
-            foreach ($event['users'] as $userID)
-            {
-                $user = getUser((int)$userID);
-                if ($user)
-                {
-                    $html .= '<li>' . $user['fName'] . ' ' . $user['lName'] .'</li>';
-                }
-            }
+            
+            $html .= "<li><b>Host: ".$host_name. "</b></li>";
+        if ($_SESSION['loggedin']){   
+            $html .= '<li><a data-transition="slide" href="eventpage.php?evid=' . $event['evid'] . '">View Attendees</a></li>';
         }
         $html .= '<li><a data-transition="slide" href="jqm-ggsignin.php?evid=' . $event['evid'] . '">Sign-In</a></li>
             </ul>
             </div>';
     }
     //$html .= '</ul>';
-    echo $html;
+    return $html;
 }
 
 function generateAdminList()
 {
-    $html = '<li data-role="list-divider">' . "Admin Controls" . '</li>
-    <a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>';
-    echo $html;
+    // User Level 2 (all members)
+    $adminMenu = '<li data-role="list-divider">' . "Admin Controls" . '</li>';
+    $adminMenu .= '<a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>';
+    $adminMenu .= '<a data-role="button" href="jqm-ggmemberdb.php" data-transition="slideup" >Member Database</a>';
+    
+    //User Level 3 (staff)
+    if ($_SESSION['rid'] >= 3)
+    {
+        $adminMenu .= '<a data-role="button" href="jqm-ggdues.php" data-transition="slideup" >Member Payments</a>';
+    }
+    
+    return $adminMenu;
 }
 
 function generateMainPage()
@@ -65,53 +74,41 @@ function generateMainPage()
         $adminMode = $_SESSION['adminmode'];
     }
 
-    $html =
-        '<div data-role="page" id="mainPage" data-theme="b" data-title="Geekspace Gwinnett Main">
-        <div data-role="header">
-        <h1>Geekspace Gwinnett Main</h1>
-        </div>';
-        if ($msg)
-        {
-            $html .= '<button disabled="">' . $msg . '</button>';
-        }
+      
     $html .=
         '<ul data-role="listview" data-inset="true">
             <li data-role="list-divider">' . "Today's Events" . '</li>';
-    echo $html;
-    generateTodaysEventList();
+    
+    $html .= generateTodaysEventList();
     if ($adminMode)
     {
-        generateAdminList();
+        $html .= generateAdminList();
     }
 
-    $html =
+    $html .=
         '</ul>
         <div data-role="footer" class="ui-bar">
         <a data-role="button" href="jqm-ggnewuser.php" data-transition="slideup" >New User</a>';
     if ($adminMode)
     {
-<<<<<<< HEAD
+
         $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Logout</a>';
-=======
+
+
         $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Disable Admin Mode</a>';
->>>>>>> origin/master
     }
     else
     {
         $html .= '<a data-role="button" href="jqm-ggadmin.php" data-transition="slideup" >Member Login</a>';
     }
 
-    $html .= '</div>';
-    echo $html;
+    $html .= '</div></div>';
 
-    echo '</div>'; // end of main page
+    return $html;
+    
+    
 }
 
-echo '<html>';
-generateJQMHeader();
-echo '<body>';
+$html = generateMainPage();
 
-
-generateMainPage();
-echo '</body>';
-echo '</html>';
+JQMrender($html);

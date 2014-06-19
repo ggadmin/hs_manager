@@ -38,13 +38,15 @@ function listEvents($criteria = "future" )
     }
     
     
-    $get_events = database_query($databases['gman'], "select * from events ".$action." ");
+    $get_events = database_query($databases['gman'], "select evid from events ".$action." ");
     if ($get_events['count'] == 0)
     {
-        $get_events['error'] = "no events today";
+        return false;
     }
-
-    return $get_events;
+    else
+    {
+        return $get_events['result'];
+    }
 }
 
 //Event info
@@ -60,11 +62,15 @@ function eventinfo($evid)
     {
         return false;
     }
-    $event_info = $get_events['result'];
+    $event_info = $get_events['result'][0];
     
-    // We need user registration data
-    $get_users =  database_query($databases['gman'], "select * from event_registration where evid = ".$evid." and dtunreg is NULL");
-    $event_info['users'] = $get_users['result'];
+    // We need rsvp data
+    $get_attendance =  database_query($databases['gman'], "select members.uid,fname,lname from event_registration,members where evid = ".$evid." and dtunreg is NOT NULL and dtattend is NOT NULL and event_registration.uid=members.uid");
+    $event_info['rsvp'] = $get_attendance['result'];
+    
+    // We need user attendce data
+    $get_attendance =  database_query($databases['gman'], "select members.uid,fname,lname from event_registration,members where evid = ".$evid." and dtattend is NOT NULL and event_registration.uid=members.uid");
+    $event_info['attended'] = $get_attendance['result'];
     
     return $event_info;
 }
@@ -120,22 +126,17 @@ function createEvent($eventData)
     {
         return "Error: eventData is invalid!";
     }
-<<<<<<< HEAD
-    
-    
-    //FIXME: Locations. for now, "GG"
-    $eventData['evlocation'] = "GG";
-  
-=======
-    // FIXME: variable event host. For now make it whoever creates the event
-    $eventData['evhostid'] = $_SESSION['uid'];
+
+
+   
+    $eventData['evhostid'] = $eventData['evhostid'];
     
     //FIXME: Locations. for now, "GG"
     $eventData['evlocation'] = "GG";
     
   
 
->>>>>>> origin/master
+
     if( database_insert($databases['gman'], "events", $eventData))
     {
         return "Added Event: " . $eventData['eventname'];
@@ -171,7 +172,7 @@ function signIn($eventID, $userID)
         
         if(database_update($databases['gman'], "insert into event_registration set evid = ".$evid.", uid = ".$uid.", dtattend = CURRENT_TIMESTAMP"))
         {
-            return TRUE;
+            return "User signed in";
         }
         else
         {
@@ -181,7 +182,7 @@ function signIn($eventID, $userID)
     else
     {
         // user is already signed in.
-        return TRUE;
+        return "User signed in";
     }
 }
 

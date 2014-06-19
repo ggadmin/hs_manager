@@ -31,7 +31,7 @@ require_once("database-functions.php");
 
 //Now that we're bootstrapped, load the databases
 $databases['gman'] = database_connect( $localdb, $localdb['gman']);
-$databases['seltzer'] = database_connect( $localdb, $localdb['seltzer']);
+#$databases['seltzer'] = database_connect( $localdb, $localdb['seltzer']);
 
 #$test = database_query($seltzer, "select * from user");
 #echo $test['count'];

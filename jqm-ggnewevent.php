@@ -44,15 +44,15 @@ function generateNewEventPage()
                     <label for="eName">Event Name</label>
                     <input type="text" id="eName" name="eName">
                 </div>
-<<<<<<< HEAD
+
                     <div data-role="fieldcontain">
                     <label for="descrip">Category</label>
                     $cat
                 </div>
                 $hostform
-=======
 
->>>>>>> origin/master
+
+
                 <div data-role="fieldcontain">
                     <label for="descrip">Description</label>
                     <input type="text" id="descrip" name="descrip">
@@ -76,17 +76,11 @@ function generateNewEventPage()
                 <button type="submit" data-theme="b" name="submit" value="submit-value">Submit</button>
             </form>
         </div>
-        <div data-role="footer">
-            <h1>New Event</h1>
-        </div>
+        
     </div>
 EOF;
     echo $html;
 }
 
-echo '<html>';
-generateJQMHeader();
-echo '<body>';
-generateNewEventPage();
-echo '</body>';
-echo '</html>';
+$html = generateNewEventPage();
+JQMrender($html);
