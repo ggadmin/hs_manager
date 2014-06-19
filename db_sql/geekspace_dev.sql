@@ -172,7 +172,11 @@ CREATE TABLE `events` (
   `evlocation` varchar(45) DEFAULT NULL,
   `catid` int(11) DEFAULT NULL,
   PRIMARY KEY (`evid`)
+<<<<<<< HEAD
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+=======
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+>>>>>>> origin/master
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +185,11 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `events` VALUES (1,'Test','','2014-06-18 18:00:00','2014-06-18 14:45:29',NULL,11,'GG',NULL),(2,'July LAN','','2014-07-19 10:00:00','2014-06-18 23:00:00',NULL,11,'GG',2),(3,'Test2','','2014-06-18 00:00:00','2014-06-18 18:55:14',NULL,11,'GG',3),(4,'Engine rebuild','','2014-06-20 16:00:00','2014-06-20 18:00:00',NULL,11,'GG',3),(5,'Blargh','','2014-06-18 00:00:00','2014-06-18 19:10:27',NULL,11,'GG',3),(6,'Blark2','','2014-06-18 00:00:00','2014-06-18 19:13:07',NULL,7,'GG',3),(7,'Blargh5','','2014-06-18 20:43:13','2014-06-18 20:43:13',NULL,11,'GG',6),(8,'Blargh5','','2014-06-18 20:43:52','2014-06-18 20:43:52',NULL,11,'GG',6),(9,'Rebuilding engines 101','','2014-06-19 18:00:00','2014-06-19 15:15:41',NULL,11,'GG',3),(10,'YAE','','2014-06-19 00:00:00','2014-06-19 15:26:04',NULL,11,'GG',3),(11,'YAE2','','2014-06-19 00:00:00','2014-06-19 15:27:10',NULL,16,'GG',3);
+=======
+INSERT INTO `events` VALUES (1,'Test','','2014-06-18 18:00:00','2014-06-18 14:45:29',NULL,11,'GG',NULL),(2,'July LAN','','2014-07-19 10:00:00','2014-06-18 23:00:00',NULL,11,'GG',2),(3,'Test2','','2014-06-18 00:00:00','2014-06-18 18:55:14',NULL,11,'GG',3),(4,'Engine rebuild','','2014-06-20 16:00:00','2014-06-20 18:00:00',NULL,11,'GG',3),(5,'Blargh','','2014-06-18 00:00:00','2014-06-18 19:10:27',NULL,11,'GG',3),(6,'Blark2','','2014-06-18 00:00:00','2014-06-18 19:13:07',NULL,7,'GG',3);
+>>>>>>> origin/master
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,4 +551,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2014-06-19 16:35:16
+=======
+-- Dump completed on 2014-06-18 20:20:38
+>>>>>>> origin/master
