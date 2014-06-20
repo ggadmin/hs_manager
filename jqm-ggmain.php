@@ -51,14 +51,16 @@ function generateTodaysEventList()
 function generateAdminList()
 {
     // User Level 2 (all members)
-    $adminMenu = '<li data-role="list-divider">' . "Admin Controls" . '</li>';
+    $adminMenu = '<li data-role="list-divider">' . "Member Options" . '</li>';
     $adminMenu .= '<a data-role="button" href="jqm-ggnewevent.php" data-transition="slideup" >Create Event</a>';
     $adminMenu .= '<a data-role="button" href="jqm-ggmemberdb.php" data-transition="slideup" >Member Database</a>';
-    
+    $adminMenu .= '<a data-role="button" href="jqm-ggeditprofile.php" data-transition="slideup" >My Profile</a>';
     //User Level 3 (staff)
     if ($_SESSION['rid'] >= 3)
     {
+        
         $adminMenu .= '<a data-role="button" href="jqm-ggdues.php" data-transition="slideup" >Member Payments</a>';
+        $adminMenu .= '<a data-role="button" href="jqm-ggstats.php" data-transition="slideup" >Member Statistics</a>';
     }
     
     return $adminMenu;

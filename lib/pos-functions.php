@@ -318,7 +318,7 @@ $gform .="</table>";
 if($q['count']!=0){
 // this adds the payment button
 	$gform .= <<<EOF
-	<form class="ui-body ui-body-b ui-corner-all" action="" data-ajax="false" method="post">
+	<form class="ui-body ui-body-b ui-corner-all" action="jqm-ggdues.php" data-ajax="false" method="post">
         <input type="hidden" data-role="none" name="formname" id="formname" value="processpayment">
 	<input type="hidden" data-role="none" name="invid" id="invid" value="$invid">
 	<label for="memo">Memo</label>
@@ -511,6 +511,11 @@ function pos_parse_post()
 						{
 							$_SESSION['msg'] = "Subscription set. Expires ";
 							 header('Location: jqm-message.php');
+						}
+						else
+						{
+							echo "error!";
+							exit();
 						}
 						
 					}

@@ -3,8 +3,96 @@
 // User functions library. These functions re use for displaying user and profile data
 
 
+//is_member (group version)
+// Gets a list of all current members (those that are current on their dues). Returns a count and an array of details
+function get_current_members()
+{
+    global $databases;
+    $output = array();
+    $today = date("Y-m-d")." 23:59:59";
+    $member_query = database_query($databases['gman'],"select members.uid,fname,lname, UNIX_TIMESTAMP(subend) as tssubend from members, subscriptions where members.uid = subscriptions.uid and subend > CURRENT_TIMESTAMP order by lname asc");
+    if ($member_query['count'] != 0)
+    {
+        $output = $member_query;
+        
+        
+        return $output;
+    }
+    else
+    {
+        $output['message'] = "There are no active members! EVERYBODY PANIC";
+        return $output;
+    }
+}
 
-//is_member
+//is_member (group version)
+// Gets a list of all members expiring within X days. Defaults 7. sorts by date to expire rather than name.
+function get_expiring_members($days=7)
+{
+    global $databases;
+    $days = intval($days);
+    $output = array();
+    $multiplier = $days * 86400;
+    $expiry = date("Y-m-d", time() + $multiplier)." 23:59:59";
+    $member_query = database_query($databases['gman'],"select members.uid,fname,lname, UNIX_TIMESTAMP(subend) as tssubend from members, subscriptions where members.uid = subscriptions.uid and subend > CURRENT_TIMESTAMP and subend <= '".$expiry."' order by subend asc");
+    if ($member_query['count'] != 0)
+    {
+        $output = $member_query;
+        
+        
+        return $output;
+    }
+    else
+    {
+        $output['message'] = "There are no members expiring in ".$days." days.";
+        return $output;
+    }
+}
+
+//is_member (group version)
+// Gets a list of all members who have expired but haven't yet been locked out
+function get_delinquent_members($days=7)
+{
+    global $databases;
+    $days = intval($days);
+    $output = array();
+    $member_query = database_query($databases['gman'],"select members.uid,fname,lname, subend, unix_timestamp(subend) as tssubend, unix_timestamp(ADDDATE(subend, interval ".$days." day)) as lockout from members, subscriptions where members.uid = subscriptions.uid and CURRENT_TIMESTAMP < ADDDATE(subend, interval ".$days." day) and subend < CURRENT_TIMESTAMP order by lockout asc");
+    if ($member_query['count'] != 0)
+    {
+        $output = $member_query;
+        
+        
+        return $output;
+    }
+    else
+    {
+        $output['message'] = "There are no members delinquent.";
+        return $output;
+    }
+}
+
+// Gets a list of all members who have expired and are locked out
+function get_inactive_members($days=7)
+{
+    global $databases;
+    $days = intval($days);
+    $output = array();
+    $member_query = database_query($databases['gman'],"select members.uid,fname,lname, unix_timestamp(subend) as tssubend, unix_timestamp(ADDDATE(subend, interval ".$days." day)) as lockout from members, subscriptions where members.uid = subscriptions.uid and CURRENT_TIMESTAMP > ADDDATE(subend, interval ".$days." day) order by lockout asc");
+    if ($member_query['count'] != 0)
+    {
+        $output = $member_query;
+        
+        
+        return $output;
+    }
+    else
+    {
+        $output['message'] = "There are no members delinquent.";
+        return $output;
+    }
+}
+
+//is_member (individual version)
 //Given uid, returns true/false. If true, returns expiry date as unix stamp;
 function is_current($uid)
 {
@@ -95,8 +183,8 @@ function addmembership($uid, $planid, $qty, $startdate, $invid)
     $sub_status = is_current($uid);
     if (!$sub_status)
     {
-        $start_stamp = time();
-        $end_stamp = time() + $length;
+        $start_stamp = strtotime($startdate);
+        $end_stamp = $start_stamp + $length;
     }
     else {
         $start_stamp = $sub_status+1;

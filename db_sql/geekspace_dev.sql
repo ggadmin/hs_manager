@@ -34,7 +34,7 @@ CREATE TABLE `accesslog` (
   `errorcode` int(11) DEFAULT NULL,
   `accesslogcol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`logentryid`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `accesslog` (
 
 LOCK TABLES `accesslog` WRITE;
 /*!40000 ALTER TABLE `accesslog` DISABLE KEYS */;
-INSERT INTO `accesslog` VALUES (1,0,'','2013-03-02 06:06:35','0','Bad Card',1,NULL),(2,0,'','2013-03-02 06:08:33','0','Bad Card',1,NULL),(3,0,'','2013-03-02 06:08:52','0','Bad Card',1,NULL),(4,0,'','2013-03-02 06:09:01','0','Bad Card',1,NULL),(5,0,'','2013-03-02 06:09:30','0','Bad Card',1,NULL),(6,0,'','2013-03-02 06:12:18','0','Bad Card',1,NULL),(7,0,'','2013-03-02 06:12:36','0','Bad Card',1,NULL),(8,3501,'','2013-03-02 06:14:58','0','Bad Card',1,NULL),(9,3501,'','2013-03-02 06:50:22','0','Bad Card',1,NULL),(10,3501,'','2013-03-02 06:50:50','0','Bad Card',1,NULL),(11,3501,'','2013-03-02 06:51:13','0','Bad Card',1,NULL),(12,3501,'','2013-03-02 06:51:46','0','Bad Card',1,NULL),(13,3501,'','2013-03-02 06:53:30','0','Bad Card',1,NULL),(14,3501,'','2013-03-02 06:53:45','0','Bad Card',1,NULL),(15,1,'HACK ATTEMPT: 192.168.40.33','2013-03-02 06:54:10','HACK ATTEMPT','',99,NULL),(16,1,'3501D5CC7F','2013-03-02 07:11:12','96','Access Granted To User',0,NULL),(17,1,'3501D5CC7F','2013-03-02 07:11:56','96','Access Granted To User',0,NULL),(18,1,'3501D5CC7F','2013-03-02 07:12:56','96','Access Granted To User',0,NULL),(19,1,'3501D5CC7F','2013-03-02 07:13:07','96','Access Granted To User',0,NULL),(20,1,'3501D5CC7F','2013-03-02 07:13:16','96','Access Granted To User',0,NULL),(21,1,'3501D5CC7F','2013-03-02 07:13:24','96','Access Granted To User',0,NULL),(22,1,'HACK ATTEMPT: 192.168.40.33','2013-03-02 07:14:04','HACK ATTEMPT','',99,NULL),(23,0,'HACK ATTEMPT: 192.168.40.30','2013-03-02 07:19:40','HACK ATTEMPT','',99,NULL),(24,0,'HACK ATTEMPT: 192.168.40.30','2013-03-02 07:21:04','HACK ATTEMPT','',99,NULL),(25,0,'HACK ATTEMPT: 192.168.40.30','2013-03-02 07:21:44','HACK ATTEMPT','',99,NULL),(26,0,'HACK ATTEMPT: 192.168.40.30','2013-03-02 07:21:58','HACK ATTEMPT','',99,NULL),(27,0,'HACK ATTEMPT: 192.168.40.30','2013-03-02 07:22:12','HACK ATTEMPT','',99,NULL),(28,1,'060095F8D7','2013-03-02 07:22:49','0','Bad Card',1,NULL),(29,1,'3501D5CC7F','2013-03-02 07:23:03','96','Access Granted To User',0,NULL),(30,1,'060095F8D7','2013-03-02 07:23:54','0','Bad Card',1,NULL),(31,1,'3501D5CC7F','2013-03-02 07:24:02','96','Access Granted To User',0,NULL),(32,1,'060095F8D7','2013-03-02 07:25:47','0','Bad Card',1,NULL),(33,1,'060095F8D7','2013-03-02 07:27:23','0','Bad Card',1,NULL),(34,1,'3501D5CC7F','2013-03-02 07:27:36','96','Access Granted To User',0,NULL),(35,1,'060095F8D7','2013-03-02 07:27:45','0','Bad Card',1,NULL),(36,1,'060095F8D7','2013-03-02 07:44:21','0','Bad Card',1,NULL),(37,1,'060095F8D7','2013-03-02 07:55:43','0','Bad Card',1,NULL),(38,1,'060095F8D7','2013-03-02 07:57:25','0','Bad Card',1,NULL),(39,1,'060095F8D7','2013-03-02 07:57:26','0','Bad Card',1,NULL),(40,1,'060095F8D7','2013-03-02 07:57:27','0','Bad Card',1,NULL),(41,1,'060095F8D7','2013-03-02 07:57:27','0','Bad Card',1,NULL),(42,1,'060095F8D7','2013-03-02 07:57:28','0','Bad Card',1,NULL),(43,1,'060095F8D7','2013-03-02 07:57:29','0','Bad Card',1,NULL),(44,1,'060095F8D7','2013-03-02 07:58:08','0','Bad Card',1,NULL),(45,1,'060095F8D7','2013-03-02 07:58:29','0','Bad Card',1,NULL),(46,1,'3501D5CC7F','2013-03-02 07:58:40','96','Access Granted To User',0,NULL),(47,1,'3501D5CC7F','2013-03-02 07:58:40','96','Access Granted To User',0,NULL),(48,1,'3501D5CC7F','2013-03-02 07:58:41','96','Access Granted To User',0,NULL),(49,1,'3501D5CC7F','2013-03-02 07:59:28','96','Access Granted To User',0,NULL),(50,1,'060095F8D7','2013-03-02 07:59:51','0','Bad Card',1,NULL),(51,1,'060095F8D7','2013-03-02 08:02:32','0','Bad Card',1,NULL),(52,1,'3501D5CC7F','2013-03-02 08:17:08','96','Access Granted To User',0,NULL),(53,1,'060095F8D7','2013-03-02 08:17:15','0','Bad Card',1,NULL),(54,1,'060095F8D7','2013-03-02 09:07:35','0','Bad Card',1,NULL),(55,1,'060095F8D7','2013-03-02 09:07:54','0','Bad Card',1,NULL),(56,1,'060095F8D7','2013-03-02 09:12:38','0','Bad Card',1,NULL),(57,1,'060095F8D7','2013-03-02 09:13:31','0','Bad Card',1,NULL),(58,1,'060095F8D7','2013-03-02 09:13:51','0','Bad Card',1,NULL),(59,1,'060095F8D7','2013-03-02 09:14:01','0','Bad Card',1,NULL),(60,1,'3501D5CC7F','2013-03-02 09:14:13','96','Access Granted To User',0,NULL);
 /*!40000 ALTER TABLE `accesslog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +140,7 @@ CREATE TABLE `event_registration` (
   `dtunreg` datetime DEFAULT NULL,
   `dtattend` datetime DEFAULT NULL,
   PRIMARY KEY (`regid`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +149,7 @@ CREATE TABLE `event_registration` (
 
 LOCK TABLES `event_registration` WRITE;
 /*!40000 ALTER TABLE `event_registration` DISABLE KEYS */;
-INSERT INTO `event_registration` VALUES (1,1,7,'2014-06-18 22:05:28',NULL,'2014-06-18 18:05:28'),(2,9,14,'2014-06-19 19:18:02',NULL,'2014-06-19 15:18:02'),(3,11,5,'2014-06-19 20:11:12',NULL,'2014-06-19 16:11:12');
+INSERT INTO `event_registration` VALUES (1,1,7,'2014-06-18 22:05:28',NULL,'2014-06-18 18:05:28'),(2,9,14,'2014-06-19 19:18:02',NULL,'2014-06-19 15:18:02'),(3,11,5,'2014-06-19 20:11:12',NULL,'2014-06-19 16:11:12'),(4,9,14,'2014-06-19 23:46:40',NULL,'2014-06-19 19:46:40');
 /*!40000 ALTER TABLE `event_registration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +205,7 @@ CREATE TABLE `invitems` (
   `effdate` datetime DEFAULT NULL,
   `planid` int(11) DEFAULT '0' COMMENT '0 = item',
   PRIMARY KEY (`lineid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +214,7 @@ CREATE TABLE `invitems` (
 
 LOCK TABLES `invitems` WRITE;
 /*!40000 ALTER TABLE `invitems` DISABLE KEYS */;
-INSERT INTO `invitems` VALUES (1,1,1,50.00,0,'','2014-06-19 20:12:36',0.00,0,NULL,'1969-12-31 00:00:00',1),(2,10,1,750.00,0,'','2014-06-19 20:31:09',0.00,0,NULL,'2014-06-19 00:00:00',5);
+INSERT INTO `invitems` VALUES (1,1,1,50.00,0,'','2014-06-20 18:33:17',0.00,0,NULL,'2014-04-20 00:00:00',1),(2,2,1,50.00,0,'','2014-06-20 18:38:25',0.00,0,NULL,'2014-06-20 00:00:00',1),(3,3,1,50.00,0,'','2014-06-20 18:41:23',0.00,0,NULL,'2014-05-20 00:00:00',1),(4,4,1,0.00,0,'','2014-06-20 18:41:43',0.00,0,NULL,'2014-05-23 00:00:00',0),(5,5,1,50.00,0,'','2014-06-20 18:42:30',0.00,0,NULL,'2014-05-24 00:00:00',1),(6,6,1,50.00,0,'','2014-06-20 18:43:00',0.00,0,NULL,'2014-05-17 00:00:00',1),(7,7,1,500.00,0,'','2014-06-20 18:43:18',0.00,0,NULL,'2013-05-20 00:00:00',2),(8,8,1,500.00,0,'','2014-06-20 19:32:35',0.00,0,NULL,'2014-02-20 00:00:00',2),(9,9,1,750.00,0,'','2014-06-20 19:33:01',0.00,0,NULL,'2014-02-20 00:00:00',5),(10,10,1,50.00,0,'','2014-06-20 19:35:42',0.00,0,NULL,'2014-06-04 00:00:00',1);
 /*!40000 ALTER TABLE `invitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +249,7 @@ CREATE TABLE `invoices` (
 
 LOCK TABLES `invoices` WRITE;
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-INSERT INTO `invoices` VALUES (1,4,11,'2014-06-19 16:12:19','2014-06-19 20:12:43',0,'Cash',1,50.00,0,'0000-00-00 00:00:00','',0),(2,9,11,'2014-06-19 16:15:23','2014-06-19 20:15:23',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(3,7,11,'2014-06-19 16:16:05','2014-06-19 20:16:05',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(4,3,11,'2014-06-19 16:21:07','2014-06-19 20:21:07',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(5,7,11,'2014-06-19 16:21:13','2014-06-19 20:21:13',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(6,2,11,'2014-06-19 16:21:24','2014-06-19 20:21:24',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(7,6,11,'2014-06-19 16:28:14','2014-06-19 20:28:14',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(8,4,11,'2014-06-19 16:29:10','2014-06-19 20:29:10',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(9,5,11,'2014-06-19 16:29:59','2014-06-19 20:29:59',0,'Cash',0,0.00,0,'0000-00-00 00:00:00',NULL,0),(10,7,11,'2014-06-19 16:31:01','2014-06-19 20:31:15',0,'Cash',1,750.00,0,'0000-00-00 00:00:00','',0);
+INSERT INTO `invoices` VALUES (1,2,11,'2014-06-20 14:33:12','2014-06-20 18:33:20',0,'House Charge',1,0.00,0,'0000-00-00 00:00:00','',0),(2,16,11,'2014-06-20 14:38:22','2014-06-20 18:38:28',0,'House Charge',1,0.00,0,'0000-00-00 00:00:00','',0),(3,6,11,'2014-06-20 14:41:16','2014-06-20 18:41:26',0,'Cash',1,50.00,0,'0000-00-00 00:00:00','',0),(4,7,11,'2014-06-20 14:41:38','2014-06-20 18:41:51',0,'Cash',1,0.00,0,'0000-00-00 00:00:00','',0),(5,7,11,'2014-06-20 14:42:21','2014-06-20 18:42:33',0,'Cash',1,50.00,0,'0000-00-00 00:00:00','',0),(6,10,11,'2014-06-20 14:42:51','2014-06-20 18:43:02',0,'Cash',1,50.00,0,'0000-00-00 00:00:00','',0),(7,3,11,'2014-06-20 14:43:09','2014-06-20 18:43:20',0,'Cash',1,500.00,0,'0000-00-00 00:00:00','',0),(8,14,11,'2014-06-20 15:32:26','2014-06-20 19:32:40',0,'House Charge',1,0.00,0,'0000-00-00 00:00:00','',0),(9,9,11,'2014-06-20 15:32:53','2014-06-20 19:33:05',0,'Cash',1,750.00,0,'0000-00-00 00:00:00','',0),(10,17,11,'2014-06-20 15:35:32','2014-06-20 19:35:46',0,'House Charge',1,0.00,0,'0000-00-00 00:00:00','',0);
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,7 +436,7 @@ CREATE TABLE `members` (
   `salt` varchar(255) DEFAULT NULL,
   `rank` int(11) DEFAULT '2',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -446,7 +445,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'admin','44187653643d6dfef1bba9747551a378caa821e8','User','Admin','','','','','','678-555-5521','admin@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(2,'mobrien','44187653643d6dfef1bba9747551a378caa821e8','O\'Brien','Miles','','','','','','678-555-5521','thechief@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(3,'mscott','44187653643d6dfef1bba9747551a378caa821e8','Scott','Montgomery','','','','','','678-555-5521','scotty@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(4,'glaforge','44187653643d6dfef1bba9747551a378caa821e8','LaForge','Geordi','','','','','','678-555-5521','geordi@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(5,'ctucker','44187653643d6dfef1bba9747551a378caa821e8','Tucker','Charles','','','','','','678-555-5521','trip@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(6,'kfrye','44187653643d6dfef1bba9747551a378caa821e8','Frye','Kaylee','','','','','','678-555-5521','kaylee@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(7,'scarter','44187653643d6dfef1bba9747551a378caa821e8','Carter','Sam','','','','','','678-555-5521','sam@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(8,'rmckay','44187653643d6dfef1bba9747551a378caa821e8','McKay','Rodney','','','','','','678-555-5521','mckay@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(9,'jharkness','44187653643d6dfef1bba9747551a378caa821e8','Harkness','Jack','','','','','','678-555-5521','jack@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(10,'sjsmith','44187653643d6dfef1bba9747551a378caa821e8','Smith','Sarah Jane','','','','','','678-555-5521','sarahjane@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(11,'pjfry','44187653643d6dfef1bba9747551a378caa821e8','Fry','Phillip','','','','','','678-555-5521','fry@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',5),(15,'','e5f8a03fcbb9a5a8e0c5e445493beec16d4870fc','Farnsworth','Hubert','','','','','','','professor@planetexpress.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:12:57','Yes','No','Yes','Yes','No','Yes','Fry',NULL,'2125551212','d}[hi{$*1!0a=d_\'',2),(14,'','c0ea4ea00dad6cf62a1821d61d18f695c1ed8d61','Spengler','Egon','','','','','','','egon@ghostbusters.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:11:09','Yes','No','Yes','Yes','No','Yes','Ray',NULL,'2125551211','io\'%/*k_qh#\"`#}:',2),(16,'','10b8985db770bc3d66b76bbed11d6514f538ef62','Frink','John','','','','','','','frink@springfieldlabs.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:15:08','Yes','No','Yes','Yes','No','Yes','Homer J',NULL,'2125551212','f9\"::5%zk%t%u\'&',2);
+INSERT INTO `members` VALUES (1,'admin','44187653643d6dfef1bba9747551a378caa821e8','User','Admin','','','','','','678-555-5521','admin@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(2,'mobrien','44187653643d6dfef1bba9747551a378caa821e8','O\'Brien','Miles','','','','','','678-555-5521','thechief@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(3,'mscott','44187653643d6dfef1bba9747551a378caa821e8','Scott','Montgomery','','','','','','678-555-5521','scotty@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(4,'glaforge','44187653643d6dfef1bba9747551a378caa821e8','LaForge','Geordi','','','','','','678-555-5521','geordi@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(5,'ctucker','44187653643d6dfef1bba9747551a378caa821e8','Tucker','Charles','','','','','','678-555-5521','trip@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(6,'kfrye','44187653643d6dfef1bba9747551a378caa821e8','Frye','Kaylee','','','','','','678-555-5521','kaylee@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(7,'scarter','44187653643d6dfef1bba9747551a378caa821e8','Carter','Sam','','','','','','678-555-5521','sam@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(8,'rmckay','44187653643d6dfef1bba9747551a378caa821e8','McKay','Rodney','','','','','','678-555-5521','mckay@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(9,'jharkness','44187653643d6dfef1bba9747551a378caa821e8','Harkness','Jack','','','','','','678-555-5521','jack@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(10,'sjsmith','44187653643d6dfef1bba9747551a378caa821e8','Smith','Sarah Jane','','','','','','678-555-5521','sarahjane@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',2),(11,'pjfry','44187653643d6dfef1bba9747551a378caa821e8','Fry','Phillip','','','','','','678-555-5521','fry@geekspacegwinnett.org','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-18 20:56:15','Yes','No','Yes','Yes','No','Yes','A. MacGyver',NULL,'202-555-1138','user_salt',5),(15,'','e5f8a03fcbb9a5a8e0c5e445493beec16d4870fc','Farnsworth','Hubert','','','','','','','professor@planetexpress.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:12:57','Yes','No','Yes','Yes','No','Yes','Fry',NULL,'2125551212','d}[hi{$*1!0a=d_\'',2),(14,'','c0ea4ea00dad6cf62a1821d61d18f695c1ed8d61','Spengler','Egon','','','','','','','egon@ghostbusters.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:11:09','Yes','No','Yes','Yes','No','Yes','Ray',NULL,'2125551211','io\'%/*k_qh#\"`#}:',2),(16,'','10b8985db770bc3d66b76bbed11d6514f538ef62','Frink','John','','','','','','','frink@springfieldlabs.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-19 19:15:08','Yes','No','Yes','Yes','No','Yes','Homer J',NULL,'2125551212','f9\"::5%zk%t%u\'&',2),(17,'','562e024250757b141f9a637a632127539cf12585','Newton','Brad','','','','','','','srqhivemind@gmail.com','0000-00-00','Yes','Yes',NULL,'','',0,'2014-06-20 19:35:24','Yes','No','Yes','Yes','No','Yes','No one',NULL,'','>f!o=\"!0m_^a5=&%',2);
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,7 +496,7 @@ CREATE TABLE `subscriptions` (
   `votable` int(11) DEFAULT '1',
   PRIMARY KEY (`idsubscriptions`),
   UNIQUE KEY `idsubscriptions_UNIQUE` (`idsubscriptions`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='memberships are defined here';
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COMMENT='memberships are defined here';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -506,7 +505,7 @@ CREATE TABLE `subscriptions` (
 
 LOCK TABLES `subscriptions` WRITE;
 /*!40000 ALTER TABLE `subscriptions` DISABLE KEYS */;
-INSERT INTO `subscriptions` VALUES (1,'Plan: 1','2014-06-19 00:00:00','2014-07-19 23:59:59',4,NULL,1,NULL,1),(2,'Plan: 5','2014-06-19 00:00:00','2015-06-19 23:59:59',7,NULL,10,NULL,1);
+INSERT INTO `subscriptions` VALUES (1,'Plan: 1','2014-04-20 00:00:00','2014-05-20 23:59:59',2,NULL,1,NULL,1),(2,'Plan: 1','2014-06-20 00:00:00','2014-07-20 23:59:59',16,NULL,2,NULL,1),(3,'Plan: 1','2014-05-20 00:00:00','2014-06-19 23:59:59',6,NULL,3,NULL,1),(4,'Plan: 0','2014-05-23 00:00:00','2014-05-23 23:59:59',7,NULL,4,NULL,0),(5,'Plan: 1','2014-05-24 00:00:00','2014-06-23 23:59:59',7,NULL,5,NULL,1),(6,'Plan: 1','2014-05-17 00:00:00','2014-06-16 23:59:59',10,NULL,6,NULL,1),(7,'Plan: 2','2013-05-20 00:00:00','2014-05-20 23:59:59',3,NULL,7,NULL,1),(8,'Plan: 2','2014-02-20 00:00:00','2015-02-20 23:59:59',14,NULL,8,NULL,1),(9,'Plan: 5','2014-02-20 00:00:00','2015-02-20 23:59:59',9,NULL,9,NULL,1),(10,'Plan: 1','2014-06-04 00:00:00','2014-07-04 23:59:59',17,NULL,10,NULL,1);
 /*!40000 ALTER TABLE `subscriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,4 +542,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-19 16:41:50
+-- Dump completed on 2014-06-20 16:06:03

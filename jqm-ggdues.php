@@ -52,7 +52,7 @@ else {
                          
                          $out .= <<<EOF
                          <div data-role="content">
-                         <form class="ui-body ui-body-b ui-corner-all" action="" method="POST">
+                         <form class="ui-body ui-body-b ui-corner-all" action="jqm-ggdues.php" method="POST">
                          <input type="hidden" name="formname"  value="membership">
                          <input type="hidden" name="invid"  value="$_GET[invid]">
                          <div data-role="header">Member: $member_name</div>
