@@ -1610,7 +1610,7 @@ Geekspace Gwinnett Automailer
 Geekspace Gwinnett, Inc.
 This message was sent to ".$to."
 Please do not reply to this message.
-Please contact operations@geekspacegwinnett.org with questions.
+
 EOF;
     $body=$body.$footer;    
     $headers = array ('From' => $from,'To' => $to,'Subject' => $subject);  

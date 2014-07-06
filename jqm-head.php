@@ -46,6 +46,7 @@ function JQMrender($body = "html here", $msg = FALSE)
         <div data-role="page" id="mainPage" data-theme="b" data-title="$title">
         <div data-role="header">
         <h1>$title</h1>
+        <a data-transition="slide" data-rel="back">Back</a>
         </div>
         $message
         $body
