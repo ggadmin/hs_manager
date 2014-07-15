@@ -8,9 +8,10 @@
  * index
  */
  //Set this first
- $page_libs = "auth";
+ $page_libs = "auth user";
 $page_title="Member Login";
  require_once("./function-loader.php");
+require_once("users.php");
 
  // If we are not logged in, force the user to go to the login page
  
@@ -21,37 +22,86 @@ $page_title="Member Login";
  
     // Pretty this up
     #background="images/splash.png
-    $login =	<<<LGN
+     $html =
+        '
+            <div data-role="content">
+                <form class="ui-body ui-body-b ui-corner-all" action="jqm-ggadmin.php" data-ajax="false" method="post">
+                    <ul data-role="listview" data-inset="true" data-filter-reveal="true" data-theme="b" data-filter="true" data-filter-placeholder="name">';
 
-<form name="f" method="POST" action="jqm-ggadmin.php">
-Username:<br><input type="text" name="user" size="15"><br>Password:<br><input type="password" size="15" name="pass"><br><input type="Submit" value="Submit" 
-name="Login">
 
-</form>
-LGN;
+    $users = listUsers();
 
-    if (isset($_POST['Login']))
+    foreach ($users['result'] as $user)
     {
-        print_r($_SESSION);
-        //Parse login
+        $html .= '<li>'
+            . '<button type="submit" name="uid" id="uid" value="' . $user['uid'] . '">'
+
+            . $user['fname']
+            . ' '
+            . $user['lname']
+            . ' -- '
+            . $user['email1']
+            . '</button>'
+            . '</li>';
+
+    }
+    $html .=
+                    '</ul>
+                </form>
+            </div>';
+    $login = $html;
+
+    if (isset($_POST['uid']))
+    {
         
-        if (user_auth($_POST['user'], $_POST['pass']))
+        if (!isset($_POST['pass']))
+        {
+            $uname = getname($_POST['uid']);
+            
+            // Password Prompt
+             $html =
+        '
+            <div data-role="content">
+                <form class="ui-body ui-body-b ui-corner-all" action="jqm-ggadmin.php" data-ajax="false" method="post">
+                <div data-role="fieldcontain">
+        <label for="uname">Username:</label>
+        <input type="hidden" id="uid" name="uid" value="'.$_POST['uid'].'">'.$uname.'
+        
+        </div>
+                <div data-role="fieldcontain">
+        <label for="pass">Password:</label>
+        <input type="password" id="pass" name="pass" value="">
+        
+        </div>
+         <button type="submit" data-theme="b" name="submit" value="submit-value">Submit</button>
+                </form>
+            </div>';
+            JQMrender($html);
+        }
+        
+        
+        //Parse login
+        else
+        {
+        if (user_auth($_POST['uid'], $_POST['pass']))
         {
              
             $_SESSION['adminmode']="admin on";
-
+            
             header("Location: jqm-ggmain.php");
         }
         else {
-             JQMrender($login); 
+            #echo "Login failed!";
+             JQMrender("Login failed!".$login); 
             
+        }
         }
         
     }
     else
     {
         
-        
+        #echo $login;
         JQMRender($login);
         
 

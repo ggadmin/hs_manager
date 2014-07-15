@@ -94,10 +94,10 @@ function generateMainPage()
     if ($adminMode)
     {
 
-        $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Logout</a>';
+        $html .= 'Logged in as '.$_SESSION['fullname'].' <a data-role="button" href="logout.php" data-transition="slideup" >Logout</a>';
 
 
-        $html .= '<a data-role="button" href="logout.php" data-transition="slideup" >Disable Admin Mode</a>';
+        
     }
     else
     {

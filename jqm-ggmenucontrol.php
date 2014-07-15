@@ -62,8 +62,14 @@ if (isset($_POST['cmd']))
             $userData['ePhone'] = $_POST['ePhone'];
             $userData['uid'] = $_POST['uid'];
             
-            //FIXME: Password and validation
-            $userData['password'] = $_POST['password1'];
+            
+            // Passwords are all lowercase last-name inversion + last 4 of their phone number by default. Should be changed later, but do it in the edit bit.
+            $rev_lname = strtolower(strrev(preg_replace('/\s+/', '', $userData['lName'])));
+            $phone_string = preg_replace('/\D/', '', $_POST['phone']);
+            $phone_len = strlen($phone_string);
+            $start = $phone_len-4;
+            $phone_last = substr($phone_string,$start);
+            $userData['password1'] = $rev_lname.$phone_last;
             
             $_SESSION['msg'] = createUser($userData);
            

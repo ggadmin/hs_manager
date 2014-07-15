@@ -23,7 +23,7 @@ function user_auth($username="default", $pass="", $remember=1) {
 	$user = qt($databases['gman'], $username);
 	
 	
-	$res = database_query($databases['gman'],"select * from members where email1 = ".$user);
+	$res = database_query($databases['gman'],"select * from members where uid = ".$user);
 	$row = $res['result'][0];
 	$dbname   = $row['username'];
         $dbpass   = $row['pass'];
@@ -31,6 +31,7 @@ function user_auth($username="default", $pass="", $remember=1) {
 
 	if ( $res['count'] == 0 )
 	{
+		echo "No data!";
 		return false;
 	}
 	
@@ -38,6 +39,7 @@ function user_auth($username="default", $pass="", $remember=1) {
 	if($username != "default" && $pass != "")
 		{
 		$pass=user_hash($pass, $row['salt']);
+		
 		if ($pass==$dbpass)
 			{
 		
@@ -45,6 +47,7 @@ function user_auth($username="default", $pass="", $remember=1) {
 		$_SESSION['uid']	=	$uid;
 		$_SESSION['uname']	=	$row['username'];
 		$_SESSION['rname']	=	$row['fname'];
+		$_SESSION['fullname']	=	$row['fname']." ".$row['lname'];
 		$_SESSION['loggedin']	=	TRUE;
 		$_SESSION['rid']	=	$row['rank'];
 		

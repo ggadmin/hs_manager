@@ -117,7 +117,7 @@ function createUser($userData)
         //Run the insert
         if ($insert = database_insert($databases['gman'], "members", $fields))
         {
-            return "Created user";
+            return "Created user.<br>Username: ".$userData['email']."<br>Password is \"".$userData['password1']."\"";
         }
         else{
             return "ERROR: Could not insert user into database.";
@@ -130,7 +130,7 @@ function createUser($userData)
 
 if (!$included)
 {
-    $users = findUsers();
+    #$users = findUsers();
     echo json_encode($users);
 
 }
