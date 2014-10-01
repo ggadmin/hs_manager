@@ -73,7 +73,19 @@ else
         <div data-role="fieldcontain">
         <label for="ePhone">Emergency Phone</label>
         <input type="text" id="ePhone" name="ePhone" value="$userinfo[econtactphone]">
-        </div>
+       
+        <label for="address">Address 1</label>
+        <input type="text" id="address" name="address" value="$userinfo[address]">
+        <label for="address2">Address 2</label>
+        <input type="text" id="address2" name="address2" value="$userinfo[address2]">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" value="$userinfo[city]">
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" value="$userinfo[state]">
+        <label for="zip">Zip</label>
+        <input type="text" id="zip" name="zip" value="$userinfo[zip]">
+
+	   </div>
         <button type="submit" data-theme="b" name="submit" value="submit-value">Submit</button>
         </form>
         </div>
