@@ -111,7 +111,16 @@ function createUser($userData)
         $fields['phone1'] = $userData['phone1'];
         $fields['econtactname'] = $userData['eContact'];
         $fields['econtactphone'] = $userData['ePhone'];
-        $fields['salt'] = user_salt();
+		$fields['address'] = $userData['address'];
+		$fields['address2'] = $userData['address2'];
+		$fields['city'] = $userData['city'];
+		$fields['state'] = $userData['state'];
+		$fields['zip'] = $userData['zip'];
+		
+		$fields['unotes'] = ''; //Unote field is not nullable. I don't know what it is.
+		$fields['snotes'] = ''; //Snote field is not nullable. I don't know what it is.
+		
+		$fields['salt'] = user_salt();
         $fields['pass'] = user_hash($userData['password1'], $fields['salt']);
         
         //Run the insert
